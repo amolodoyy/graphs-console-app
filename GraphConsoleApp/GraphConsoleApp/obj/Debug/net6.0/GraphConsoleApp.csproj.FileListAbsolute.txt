@@ -1,0 +1,17 @@
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\GraphConsoleApp.exe
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\GraphConsoleApp.deps.json
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\GraphConsoleApp.runtimeconfig.json
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\GraphConsoleApp.dll
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\GraphConsoleApp.pdb
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\bin\Debug\net6.0\QuikGraph.dll
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.csproj.AssemblyReference.cache
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.AssemblyInfoInputs.cache
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.AssemblyInfo.cs
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.csproj.CoreCompileInputs.cache
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.csproj.CopyComplete
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.dll
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\refint\GraphConsoleApp.dll
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.pdb
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\GraphConsoleApp.genruntimeconfig.cache
+E:\uni\graphs-console-app\GraphConsoleApp\GraphConsoleApp\obj\Debug\net6.0\ref\GraphConsoleApp.dll

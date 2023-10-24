@@ -4,41 +4,62 @@ namespace GraphConsoleApp
 {
     public static class GraphTxtReader
     {
-        public static AdjacencyGraph<Vertex, Edge<Vertex>> FromTxt(string filepath)
+        public static AdjacencyGraph<int, Edge<int>> FromTxt(string filepath)
         {
-            var graph = new AdjacencyGraph<Vertex, Edge<Vertex>>();
+            var graph = new AdjacencyGraph<int, Edge<int>>();
             try
             {
-                using (var reader = new StreamReader(filepath))
+                using var reader = new StreamReader(filepath);
+                string? line;
+                int lineIndex = 0;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    string? line;
-                    int lineIndex = 0;
-                    while((line = reader.ReadLine()) != null)
+                    if (lineIndex == 0)
                     {
-                        if(lineIndex == 0)
-                            graph.AddVertexRange(new List<Vertex>(int.Parse(line)));
-                        else
-                            ProcessRow((lineIndex, line), graph);
-
-                        lineIndex++;
+                        graph.AddVertexRange(Enumerable.Range(0, int.Parse(line)));
                     }
+                    else
+                    {
+                        ProcessUndirectedRow((lineIndex, line), graph);
+                    }
+
+                    lineIndex++;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error while reading file: " + ex.Message);
                 Console.WriteLine("Please try again");
+                return graph;
             }
             return graph;
         }
-        private static void ProcessRow((int, string) row, AdjacencyGraph<Vertex, Edge<Vertex>> graph)
+        private static void ProcessDirectedRow((int, string) row, AdjacencyGraph<int, Edge<int>> graph)
         {
-            Console.WriteLine(row.Item1);
-            var values = row.Item2.Split(' ').Select(int.Parse).ToList();
-            var edges = values
-                .Select(v => new Edge<Vertex>(graph.Vertices.ElementAt(row.Item1 - 1), new Vertex(v)))
-                .ToList();
-            graph.AddEdgeRange(edges);
+            var values = row.Item2.Split(' ').Select(int.Parse).ToArray();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                var edge = new Edge<int>(row.Item1-1, i);
+                graph.AddEdgeRange(Enumerable.Repeat(edge, values[i]));
+            }
+        }
+        private static void ProcessUndirectedRow((int, string) row, AdjacencyGraph<int, Edge<int>> graph)
+        {
+            var values = row.Item2.Split(' ').Select(int.Parse).ToArray();
+
+            for(int i = row.Item1 - 1; i < values.Length; i++)
+            {
+                var edge = new Edge<int>(row.Item1 - 1, i);
+                graph.AddEdgeRange(Enumerable.Repeat(edge, values[i]));
+            }
         }
     }
 }
+/*
+ 
+    v0 v1 v2 v3
+ v0 0  1   0  1
+ v1 1  0   
+ v2
+ */

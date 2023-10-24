@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "GraphConsoleApp/1.0.0": {
+        "dependencies": {
+          "QuikGraph": "2.5.0"
+        },
+        "runtime": {
+          "GraphConsoleApp.dll": {}
+        }
+      },
+      "QuikGraph/2.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/QuikGraph.dll": {
+            "assemblyVersion": "2.5.0.0",
+            "fileVersion": "2.5.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GraphConsoleApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "QuikGraph/2.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sG+mrPpXwxlXknRK5VqWUGiOmDACa9X+3ftlkQIMgOZUqxVOQSe0+HIU9PTjwqazy0pqSf8MPDXYFGl0GYWcKw==",
+      "path": "quikgraph/2.5.0",
+      "hashPath": "quikgraph.2.5.0.nupkg.sha512"
+    }
+  }
+}
