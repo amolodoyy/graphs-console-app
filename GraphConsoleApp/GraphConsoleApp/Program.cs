@@ -1,26 +1,52 @@
 ﻿using GraphConsoleApp;
+using GraphLib;
+using GraphLib.Algorithms;
+using GraphLib.Enums;
+using GraphLib.Utils;
+using QuikGraph;
 
-const string dirPath = ".\\Graphs\\";
-
-Console.WriteLine("Starting application...\n");
+var currentTask = TaskEnum.Task1;
+ConsoleHelper.WriteTaskMessage("First task message", currentTask);
 Thread.Sleep(1000);
 
-Console.WriteLine("Taking graphs from `Graphs` folder...\n");
+ConsoleHelper.WriteSeparator();
+
+currentTask = TaskEnum.Task2;
+ConsoleHelper.WriteTaskMessage("Second task message", currentTask);
 Thread.Sleep(1000);
 
-if(!Directory.Exists(dirPath))
+ConsoleHelper.WriteSeparator();
+
+currentTask = TaskEnum.Task3;
+ConsoleHelper.WriteTaskMessage("Third task message", currentTask);
+Thread.Sleep(1000);
+
+ConsoleHelper.WriteSeparator();
+
+currentTask = TaskEnum.Task4;
+ConsoleHelper.WriteTaskMessage("Fourth task message", currentTask);
+Thread.Sleep(1000);
+
+if (!Directory.Exists(AppSettings.SourceDirectoryPath))
 {
-    Console.WriteLine("Cannot find `Graphs` folder, exiting.\n");
+    ConsoleHelper.WriteError("Cannot find `sources` folder, please check that you've placed your folders correctly.\n");
+    ConsoleHelper.WriteInfo("Exiting application...");
     return;
 }
 
-var filePaths = Directory.GetFiles(dirPath);
+var filePaths = Directory.GetFiles(AppSettings.SourceDirectoryPath);
 
-var graphs = filePaths.Select(f => GraphTxtReader.FromTxt(f)).ToList();
+var graphs = filePaths.Select(f => GraphTxtReader.FromTxt(f)).Where(g => g is not null).ToList();
+
+ConsoleHelper.WriteInfo("Task 1");
+currentTask = TaskEnum.Task1;
 
 foreach(var graph in graphs)
 {
     // Do something with graph, for example:
-    Console.WriteLine("====================================================");
-    Console.WriteLine("Graph size (sum of vertices and edges) is " + (graph.VertexCount + graph.EdgeCount) + "\n");
+    ConsoleHelper.WriteSeparator();
+    ConsoleHelper.WriteTaskMessage(
+        "Graph size (sum of vertices and edges) is " +
+        GraphSizeAlgorithm<int, Edge<int>>.GetSize(graph!),
+        currentTask);
 }

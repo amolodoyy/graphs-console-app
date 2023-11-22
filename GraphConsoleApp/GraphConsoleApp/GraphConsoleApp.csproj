@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="QuikGraph" Version="2.5.0" />
+    <ProjectReference Include="..\GraphLib\GraphLib.csproj" />
   </ItemGroup>
-
+	
 </Project>
