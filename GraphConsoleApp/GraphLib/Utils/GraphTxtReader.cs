@@ -29,7 +29,7 @@ namespace GraphLib
             }
             catch
             {
-                ConsoleHelper.WriteError($"Graph file format {filepath} is not valid. " +
+                ConsoleHelper.WriteError($"Format of graph file {filepath} is not valid. " +
                     $"Omitting this file.");
                 return null;
             }
