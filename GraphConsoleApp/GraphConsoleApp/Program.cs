@@ -6,26 +6,6 @@ using GraphLib.Utils;
 using QuikGraph;
 
 var currentTask = TaskEnum.Task1;
-ConsoleHelper.WriteTaskMessage("First task message", currentTask);
-Thread.Sleep(1000);
-
-ConsoleHelper.WriteSeparator();
-
-currentTask = TaskEnum.Task2;
-ConsoleHelper.WriteTaskMessage("Second task message", currentTask);
-Thread.Sleep(1000);
-
-ConsoleHelper.WriteSeparator();
-
-currentTask = TaskEnum.Task3;
-ConsoleHelper.WriteTaskMessage("Third task message", currentTask);
-Thread.Sleep(1000);
-
-ConsoleHelper.WriteSeparator();
-
-currentTask = TaskEnum.Task4;
-ConsoleHelper.WriteTaskMessage("Fourth task message", currentTask);
-Thread.Sleep(1000);
 
 if (!Directory.Exists(AppSettings.SourceDirectoryPath))
 {
@@ -50,3 +30,13 @@ foreach(var graph in graphs)
         GraphSizeAlgorithm<int, Edge<int>>.GetSize(graph!),
         currentTask);
 }
+
+currentTask = TaskEnum.Task2;
+
+ConsoleHelper.WriteTaskMessage("The Bron-Kerbosh algorithm with pivoting is used to calculate the clique.", currentTask);
+
+var graph_1 = graphs.FirstOrDefault();
+
+var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
+
+Console.WriteLine(ConsoleHelper.ListToString(cliquesList));

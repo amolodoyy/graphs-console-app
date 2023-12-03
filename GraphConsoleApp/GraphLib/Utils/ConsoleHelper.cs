@@ -46,5 +46,14 @@ namespace GraphLib.Utils
             Console.WriteLine("ERROR: " + message + "\n");
             Console.ForegroundColor = originalColor;
         }
+        public static string ListToString<T>(List<T> values)
+        {
+            string resString = string.Empty;
+            foreach (var value in values)
+            {
+                resString += $"{value} ";
+            }
+            return resString;
+        }
     }
 }
