@@ -1,67 +1,65 @@
-﻿using GraphLib.Utils;
+﻿using GraphLib.Models;
+using GraphLib.Utils;
 using QuikGraph;
+using System.Collections.ObjectModel;
 
 namespace GraphLib
 {
     public static class MaximumCliqueAlgorithm
     {
-        // add timer
-        // clique for multigraphs - most number of edges in most number of vertices
-        // extend to have a few cliques
-        public static List<int> FormGraphFromVertices(UndirectedGraph<int, Edge<int>> undirectedGraph)
+        //Условие в основном цикле: not должно содержать вершины, НЕ СОЕДИНЕННЫХ НИ С ОДНОЙ из вершин во множестве candidates
+        private static bool CheckIfConnected(List<Vertex> candidates, List<Vertex> not, AdjancencyMatrix adjMatrix)
         {
-            var R = new List<int>();
-            var X = new List<int>();
-            var P = undirectedGraph.Vertices.ToList();
-            var cliques = new List<int>();
-
-            var totalCliques = BronKerbosh(undirectedGraph, R, P, X, cliques);
-            /*var resGraph = new UndirectedGraph<int, Edge<int>>();
-
-            resGraph.AddVertexRange(R);
-            foreach (var v in R)
+            for (int i = 0; i < not.Count; i++)
             {
-                var RWithoutV = R.Where(r => r != v).ToList();
-                foreach(var r in RWithoutV)
-                {
-                    resGraph.AddEdge(new Edge<int>(v, r));
-                }
+                int l = 0;
+                for (int j = 0; j < candidates.Count; j++)
+                    if (adjMatrix[candidates[j].Id, not[i].Id] || adjMatrix[not[i].Id, candidates[j].Id])
+                        l++;
+
+                if (l == 0)
+                    return true;
             }
-            return resGraph;*/
-            return totalCliques;
+
+
+            return false;
         }
-        private static List<int> BronKerbosh(UndirectedGraph<int, Edge<int>> graph, List<int> R, List<int> P, List<int> X, List<int> cliques)
+        private static List<List<Vertex>> result = new List<List<Vertex>>();
+        private static void Extend(List<Vertex> compsub, List<Vertex> candidates, List<Vertex> not, AdjancencyMatrix adjMatrix)
         {
-            if(P.Count == 0 && X.Count == 0)
+            while (candidates.Count != 0 && !CheckIfConnected(candidates, not, adjMatrix))
             {
-                Console.WriteLine($"Found clique {ConsoleHelper.ListToString(R)}");
-                return R;
+                //Для формирования new_candidates и new_not, необходимо удалять из candidates и not вершины, СОЕДИНЕННЫЕ с выбранной вершиной.
 
+                Vertex v = candidates[0];
+                if (adjMatrix[v.Id, v.Id])
+                {
+                    candidates.Remove(v);
+                    continue;
+                }
+                compsub.Add(v);
+                List<Vertex> new_candidates = new List<Vertex>(candidates);
+                new_candidates.RemoveAt(0);
+                new_candidates.RemoveAll(p => adjMatrix[v.Id, p.Id] || adjMatrix[p.Id, v.Id] || adjMatrix[p.Id, p.Id]);
+
+                List<Vertex> new_not = new List<Vertex>(not);
+                new_not.RemoveAll(p => adjMatrix[v.Id, p.Id] || adjMatrix[p.Id, v.Id] || adjMatrix[p.Id, p.Id]);
+                if (new_not.Count == 0 && new_candidates.Count == 0)
+                    result.Add(compsub.ToList());
+                else
+                    Extend(compsub, new_candidates, new_not, adjMatrix);
+                compsub.Remove(v);
+                candidates.Remove(v);
+                not.Add(v);
             }
+        }
 
-            // choose a pivot
-            var pivot = P.Union(X)
-                .ToList()
-                .Select(graph.AdjacentDegree)
-                .OrderByDescending(x => x)
-                .FirstOrDefault();
-            var tmp = graph.AdjacentVertices(pivot);
+        public static List<List<Vertex>> Alghorithm(AdjancencyMatrix adjMatrix, ObservableCollection<Vertex> vertices)
+        {
+            result = new List<List<Vertex>>();
 
-            var pCopy = new List<int>(P);
-            pCopy.RemoveAll(v => graph.AdjacentVertices(pivot).Contains(v));
-            foreach(var v in pCopy)
-            {
-                var vList = new List<int> { v };
-                var neighbors_pList = graph.AdjacentVertices(v);
-                cliques.Concat(BronKerbosh(graph,
-                    R.Union(vList).ToList(),
-                    P.Intersect(neighbors_pList).ToList(), 
-                    X.Intersect(neighbors_pList).ToList(),
-                    cliques));
-                P.Remove(v);
-                X.Add(v);
-            }
-            return cliques;
+            Extend(new List<Vertex>(), new List<Vertex>(vertices), new List<Vertex>(), adjMatrix);
+            return result;
         }
     }
 }

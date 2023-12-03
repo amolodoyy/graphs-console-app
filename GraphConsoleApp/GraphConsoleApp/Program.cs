@@ -37,6 +37,6 @@ ConsoleHelper.WriteTaskMessage("The Bron-Kerbosh algorithm with pivoting is used
 
 var graph_1 = graphs.FirstOrDefault();
 
-var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
+//var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
 
 Console.WriteLine(ConsoleHelper.ListToString(cliquesList));
