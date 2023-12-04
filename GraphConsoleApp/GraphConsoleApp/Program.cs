@@ -39,4 +39,6 @@ var graph_1 = graphs.FirstOrDefault();
 
 var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
 
-Console.WriteLine(ConsoleHelper.ListToString(cliquesList));
+foreach (var clique in cliquesList){
+  Console.WriteLine($"[ {ConsoleHelper.ListToString(clique.Vertices.ToList())}]");
+}
