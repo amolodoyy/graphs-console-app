@@ -1,15 +1,15 @@
-﻿namespace GraphConsoleApp;
+﻿using System.Net.Sockets;
+using Microsoft.VisualBasic;
+
+namespace GraphConsoleApp;
 static class AppSettings
 {
+    private static char sp = Path.DirectorySeparatorChar;
     /* PROD: */
 
-    /*
-    
-    public const string SourceDirectoryPath = ".\\Graphs\\";
-
-    */
+    public static string SourceDirectoryPath = $".{sp}Graphs{sp}";
 
     /* DEV: */
-    public const string SourceDirectoryPath = "..\\..\\..\\Graphs\\";
-}
 
+    //public static string SourceDirectoryPath = $"..{sp}..{sp}..{sp}Graphs{sp}";
+}

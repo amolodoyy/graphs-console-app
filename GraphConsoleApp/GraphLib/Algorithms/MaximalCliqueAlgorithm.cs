@@ -2,6 +2,7 @@
 using GraphLib.Algorithms;
 using GraphLib.Utils;
 using QuikGraph;
+using QuikGraph.Algorithms;
 
 namespace GraphLib
 {
@@ -29,6 +30,7 @@ namespace GraphLib
               resGraphs.Add(graphCopy);
             }
 
+            // finding maximum clique(s)
             var maxCliqueSize = resGraphs.Select(GraphSizeAlgorithm<int, Edge<int>>.GetSize).OrderByDescending(x => x).FirstOrDefault();
             resGraphs = resGraphs.Where(g => GraphSizeAlgorithm<int, Edge<int>>.GetSize(g) == maxCliqueSize).ToList();
 
@@ -63,6 +65,33 @@ namespace GraphLib
                 P.Remove(v);
                 X.Add(v);
             }
+        }
+
+        private static List<int> GreedyAlgorithm(UndirectedGraph<int, Edge<int>> undirectedGraph) {
+          var vertices = undirectedGraph.Vertices;
+
+          Random r = new Random();
+          var randomIndex = r.Next(undirectedGraph.VertexCount);
+          List<int> clique = new List<int> { undirectedGraph.Vertices.ToList()[randomIndex] };
+
+          foreach (var vertex in vertices) {
+            if (clique.Contains(vertex)) continue;
+
+            var shouldAddToClique = true;
+
+            foreach (var cliqueVertex in clique) {
+              if (undirectedGraph.AdjacentVertices(cliqueVertex).Contains(vertex)) {
+                continue;
+              } else {
+                shouldAddToClique = false;
+                break;
+              }
+            }
+
+            if (shouldAddToClique) clique.Add(vertex);
+          }
+
+          return clique;
         }
     }
 }
