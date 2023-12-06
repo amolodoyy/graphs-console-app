@@ -77,21 +77,88 @@ namespace GraphLib
           foreach (var vertex in vertices) {
             if (clique.Contains(vertex)) continue;
 
-            var shouldAddToClique = true;
-
-            foreach (var cliqueVertex in clique) {
-              if (undirectedGraph.AdjacentVertices(cliqueVertex).Contains(vertex)) {
-                continue;
-              } else {
-                shouldAddToClique = false;
-                break;
-              }
-            }
-
+            // Check if vertex is adjacent to all vertices of the clique
+            var shouldAddToClique = undirectedGraph.AdjacentVertices(vertex).Intersect(clique).Count() == clique.Count();
             if (shouldAddToClique) clique.Add(vertex);
           }
 
           return clique;
+        }
+
+        public static List<List<int>> TabuSearch(UndirectedGraph<int, Edge<int>> graph) {
+          var vertices = graph.Vertices;
+          const int maxIterations = 20;
+
+          Random random = new Random();
+          var randomIndex = random.Next(graph.VertexCount);
+          var clique = new List<int> { graph.Vertices.ToList()[randomIndex] };
+
+          var bestClique = new List<int>();
+          bestClique.AddRange(clique);
+          int bestSize = bestClique.Count;
+
+          var maximalCliques = new List<List<int>>();
+
+          // Indexes correspond to verteces, values correspond to iteration number when vertex was added
+          int[] nodeTabuList = new int[graph.VertexCount];
+          for (int i = 0; i < nodeTabuList.Length; i++)
+            nodeTabuList[i] =  int.MinValue;
+
+          for (int i = 0; i < maxIterations; i++) {
+            if (clique.Count() == graph.VertexCount) break;
+
+            var cliqueChanged = false;
+            var nodeOptions = GetNodeOptions(clique, graph);
+
+            if (nodeOptions.Count > 0) {
+              var allowedNodes = GetAllowedNodeOptions(nodeTabuList, nodeOptions, i);
+              if (allowedNodes.Count > 0) {
+                var bestNode = allowedNodes.OrderByDescending(v => graph.AdjacentDegree(v)).FirstOrDefault();
+                clique.Add(bestNode);
+                clique.Sort();
+                nodeTabuList[bestNode] = i;
+                cliqueChanged = true;
+              }
+            }
+
+            if (!cliqueChanged && clique.Count() != 0) {
+              maximalCliques.Add(clique.ToList());
+              var nodeToRemove = clique[random.Next(0, clique.Count)];
+              clique.Remove(nodeToRemove);
+              clique.Sort();
+              nodeTabuList[nodeToRemove] = i;
+            }
+          }
+
+          return maximalCliques.Select(x => new HashSet<int>(x))
+                    .Distinct(HashSet<int>.CreateSetComparer()).Select(x => x.ToList()).ToList();
+        }
+
+        private static List<int> GetNodeOptions(List<int> cliqueVertices, UndirectedGraph<int, Edge<int>> graph) {
+          List<int> nodeOptions = new List<int>();
+
+          foreach (var vertex in graph.Vertices) {
+            // Check if vertex is adjacent to all vertices of the clique
+            if (graph.
+                AdjacentVertices(vertex).
+                Intersect(cliqueVertices).
+                Count() == cliqueVertices.Count)
+            nodeOptions.Add(vertex);
+          }
+
+          return nodeOptions;
+        }
+
+        private static List<int> GetAllowedNodeOptions(int[] nodeTabuList, List<int> nodeOptions, int currentIteration) {
+          List<int> allowedNodeOptions = new List<int>();
+
+          foreach (var node in nodeOptions) {
+            // Node is allowed only if it was tabooed more than 1 iteration ago
+            if (nodeTabuList[node] + 1 < currentIteration)
+              allowedNodeOptions.Add(node);
+          }
+
+          return allowedNodeOptions;
         }
     }
 }
