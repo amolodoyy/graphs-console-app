@@ -4,7 +4,7 @@ using GraphLib.Algorithms;
 using GraphLib.Enums;
 using GraphLib.Utils;
 using QuikGraph;
-
+/*
 var currentTask = TaskEnum.Task1;
 
 if (!Directory.Exists(AppSettings.SourceDirectoryPath))
@@ -26,8 +26,8 @@ foreach(var graph in graphs)
     // Do something with graph, for example:
     ConsoleHelper.WriteSeparator();
     ConsoleHelper.WriteTaskMessage(
-        "Graph size (sum of vertices and edges) is " +
-        GraphSizeAlgorithm<int, Edge<int>>.GetSize(graph!),
+        "Graph size (sum of vertices and UndirectedEdges) is " +
+        GraphSizeAlgorithm<int, UndirectedEdge<int>>.GetSize(graph!),
         currentTask);
 }
 
@@ -42,3 +42,5 @@ var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
 foreach (var clique in cliquesList){
   Console.WriteLine($"[ {ConsoleHelper.ListToString(clique.Vertices.ToList())}]");
 }
+*/
+
