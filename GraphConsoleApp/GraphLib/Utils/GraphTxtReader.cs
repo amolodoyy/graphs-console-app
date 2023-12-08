@@ -5,9 +5,9 @@ namespace GraphLib
 {
     public static class GraphTxtReader
     {
-        public static UndirectedGraph<int, Edge<int>>? FromTxt(string filepath)
+        public static UndirectedGraph<int, UndirectedEdge<int>>? FromTxt(string filepath)
         {
-            var graph = new UndirectedGraph<int, Edge<int>>();
+            var graph = new UndirectedGraph<int, UndirectedEdge<int>>();
             try
             {
                 using var reader = new StreamReader(filepath);
@@ -36,14 +36,14 @@ namespace GraphLib
             return graph;
         }
         // use for undirected graphs
-        private static void ProcessUndirectedRow((int, string) row, UndirectedGraph<int, Edge<int>> graph)
+        private static void ProcessUndirectedRow((int, string) row, UndirectedGraph<int, UndirectedEdge<int>> graph)
         {
             var values = row.Item2.Split(' ').Select(int.Parse).ToArray();
 
             for (int i = row.Item1 - 1; i < values.Length; i++)
             {
-                var edge = new Edge<int>(row.Item1 - 1, i);
-                graph.AddEdgeRange(Enumerable.Repeat(edge, values[i]));
+                var UndirectedEdge = new UndirectedEdge<int>(row.Item1 - 1, i);
+                graph.AddEdgeRange(Enumerable.Repeat(UndirectedEdge, values[i]));
             }
         }
     }
