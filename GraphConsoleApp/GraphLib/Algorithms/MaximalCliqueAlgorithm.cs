@@ -1,4 +1,6 @@
-﻿using GraphLib.Algorithms;
+﻿/*
+
+using GraphLib.Algorithms;
 using QuikGraph;
 
 namespace GraphLib;
@@ -158,3 +160,5 @@ public static class MaximumCliqueAlgorithm
       return allowedNodeOptions;
     }
 }
+
+*/

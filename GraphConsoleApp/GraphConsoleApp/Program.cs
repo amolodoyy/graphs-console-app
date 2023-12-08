@@ -4,7 +4,8 @@ using GraphLib.Algorithms;
 using GraphLib.Enums;
 using GraphLib.Utils;
 using QuikGraph;
-/*
+using System.Collections.Generic;
+
 var currentTask = TaskEnum.Task1;
 
 if (!Directory.Exists(AppSettings.SourceDirectoryPath))
@@ -17,9 +18,9 @@ if (!Directory.Exists(AppSettings.SourceDirectoryPath))
 var filePaths = Directory.GetFiles(AppSettings.SourceDirectoryPath);
 
 var graphs = filePaths.Select(f => GraphTxtReader.FromTxt(f)).Where(g => g is not null).ToList();
-
 ConsoleHelper.WriteInfo("Task 1");
-currentTask = TaskEnum.Task1;
+
+/*
 
 foreach(var graph in graphs)
 {
@@ -44,3 +45,9 @@ foreach (var clique in cliquesList){
 }
 */
 
+var last2Graphs = graphs.Skip(Math.Max(0, graphs.Count - 2)).ToList();
+
+ModularProductAlgorithm.CalculateProductString(last2Graphs!);
+
+
+int x = 0;

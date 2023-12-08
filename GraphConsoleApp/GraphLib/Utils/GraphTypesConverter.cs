@@ -37,7 +37,7 @@ internal static class GraphTypesConverter
 
         return resultingGraph;
     }
-    private static UndirectedGraph<string, UndirectedEdge<string>> IntToString(UndirectedGraph<int, UndirectedEdge<int>> intGraph)
+    public static UndirectedGraph<string, UndirectedEdge<string>> IntToString(UndirectedGraph<int, UndirectedEdge<int>> intGraph)
     {
         var stringGraph = new UndirectedGraph<string, UndirectedEdge<string>>();
 

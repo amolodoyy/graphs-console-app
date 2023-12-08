@@ -8,5 +8,7 @@ public static class MaximalCommonSubgraphAlgorithm
         List<UndirectedGraph<int, UndirectedEdge<int>>> graphs)
     {
         var modularProduct = ModularProductAlgorithm.CalculateProduct(graphs);
+
+        return new UndirectedGraph<int, UndirectedEdge<int>>();
     }
 }
