@@ -63,7 +63,7 @@ int graph2 = ran.Next(graphsInfo.Count);
 while (graph2 == graph1)
   graph2 = ran.Next(graphsInfo.Count);
 
-Console.WriteLine($"Calculating maximum common subgraph for {graphsInfo[graph1].Item1} and {graphsInfo[graph2].Item2}:");
+Console.WriteLine($"Calculating maximum common subgraph for {graphsInfo[graph1].Item2} and {graphsInfo[graph2].Item2}:");
 var graphsForSubgraph = new List<UndirectedGraph<int, UndirectedEdge<int>>>
 {
   graphsInfo[graph1].Item1!,
