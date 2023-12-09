@@ -7,7 +7,7 @@ static class AppSettings
     private static char sp = Path.DirectorySeparatorChar;
     /* PROD: */
 
-    public static string SourceDirectoryPath = $".{sp}Graphs{sp}";
+    public static string SourceDirectoryPath = $".{sp}..{sp}examples{sp}";
 
     /* DEV: */
 
