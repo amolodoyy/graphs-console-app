@@ -8,6 +8,7 @@ public static class ModularProductAlgorithm
 {
     public static UndirectedGraph<string, UndirectedEdge<string>> CalculateProductString(List<UndirectedGraph<int, UndirectedEdge<int>>> graphs)
     {
+        Console.WriteLine("Calculating Modular Product of the graphs...");
         var stringGraph = GraphTypesConverter.IntRangeToStringRange(graphs).ToList();
         var currentGraph = GraphTypesConverter.IntToString(graphs.FirstOrDefault()!);
 
@@ -162,11 +163,11 @@ public static class ModularProductAlgorithm
     //     return modularProduct;
 
     // }
-    private static string MinVertex(string vertex1, string vertex2)
+    public static string MinVertex(string vertex1, string vertex2)
     {
       return String.Compare(vertex1, vertex2) < 0 ? vertex1 : vertex2;
     }
-    private static string MaxVertex(string vertex1, string vertex2)
+    public static string MaxVertex(string vertex1, string vertex2)
     {
       return String.Compare(vertex1, vertex2) > 0 ? vertex1 : vertex2;
     }

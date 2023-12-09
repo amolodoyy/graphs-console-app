@@ -48,7 +48,7 @@ public static class MaximalCommonSubgraphAlgorithm
 
   private static List<List<int>> GetOriginalSubgraphs(Dictionary<string, int> indexedVertices, List<UndirectedGraph<int, UndirectedEdge<int>>> maximumCliques, int numOfGraphs)
   {
-    Console.WriteLine($"The common subgraphs for {numOfGraphs} graphs:");
+    Console.WriteLine($"\nThe common subgraphs for {numOfGraphs} graphs:");
 
     var clique = maximumCliques.FirstOrDefault();
     var originalVertices = new List<List<int>>();
@@ -81,7 +81,7 @@ public static class MaximalCommonSubgraphAlgorithm
     foreach (var subgraph in subgraphs){
       i++;
       Console.WriteLine($"Common subgraph in Graph #{i}:");
-      Console.WriteLine($"[ {ConsoleHelper.ListToString(subgraph)}]");
+      Console.WriteLine($"[ {ConsoleHelper.ListToString(subgraph)}]\n");
     }
   }
 }

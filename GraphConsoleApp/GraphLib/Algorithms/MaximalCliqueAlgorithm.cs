@@ -15,7 +15,13 @@ public static class MaximumCliqueAlgorithm
         var P = undirectedGraph.Vertices.ToList();
         var cliques = new List<List<int>>();
 
-        BronKerbosh(undirectedGraph, R, P, X, cliques);
+        if (GraphSizeAlgorithm<int, UndirectedEdge<int>>.GetSize(undirectedGraph) > 2000) {
+          Console.WriteLine("Graph is too large, applying Tabu Search algorithm approximation...");
+          cliques = TabuSearch(undirectedGraph);
+        } else {
+          Console.WriteLine("Applying Bron-Kerbosh algorithm...");
+          BronKerbosh(undirectedGraph, R, P, X, cliques);
+        }
         var resGraphs = new List<UndirectedGraph<int, UndirectedEdge<int>>>();
 
         // getting the clique as a subgraph of the original graph using obtained clique vertices
@@ -84,7 +90,7 @@ public static class MaximumCliqueAlgorithm
 
     public static List<List<int>> TabuSearch(UndirectedGraph<int, UndirectedEdge<int>> graph) {
       var vertices = graph.Vertices;
-      const int maxIterations = 20;
+      const int maxIterations = 200;
 
       var random = new Random();
       var randomIndex = random.Next(graph.VertexCount);
@@ -101,8 +107,14 @@ public static class MaximumCliqueAlgorithm
       for (int i = 0; i < nodeTabuList.Length; i++)
         nodeTabuList[i] =  int.MinValue;
 
-      for (int i = 0; i < maxIterations; i++) {
-        if (clique.Count() == graph.VertexCount) break;
+      for (int i = 0; i < maxIterations || maximalCliques.Count == 0; i++) {
+        if (clique.Count() == graph.VertexCount)
+        {
+          var fullClique = new List<int>();
+          fullClique.AddRange(graph.Vertices);
+          maximalCliques.Add(fullClique);
+          break;
+        }
 
         var cliqueChanged = false;
         var nodeOptions = GetNodeOptions(clique, graph);
