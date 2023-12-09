@@ -5,10 +5,7 @@ namespace GraphLib;
 
 public static class MaximumCliqueAlgorithm
 {
-    // add timer
-    // clique for multigraphs - most number of UndirectedEdges in most number of vertices
-    // extend to have a few cliques
-    public static List<UndirectedGraph<int, UndirectedEdge<int>>> FindAll(UndirectedGraph<int, UndirectedEdge<int>> undirectedGraph)
+    public static UndirectedGraph<int, UndirectedEdge<int>> FindAll(UndirectedGraph<int, UndirectedEdge<int>> undirectedGraph)
     {
         var R = new List<int>();
         var X = new List<int>();
@@ -33,11 +30,10 @@ public static class MaximumCliqueAlgorithm
           resGraphs.Add(graphCopy);
         }
 
-        // finding maximum clique(s)
-        var maxCliqueSize = resGraphs.Select(GraphSizeAlgorithm<int, UndirectedEdge<int>>.GetSize).OrderByDescending(x => x).FirstOrDefault();
-        resGraphs = resGraphs.Where(g => GraphSizeAlgorithm<int, UndirectedEdge<int>>.GetSize(g) == maxCliqueSize).ToList();
+        // finding maximum clique
+        var maximumClique = resGraphs.OrderByDescending(x => x.VertexCount).FirstOrDefault();
 
-        return resGraphs;
+        return maximumClique;
     }
     private static void BronKerbosh(UndirectedGraph<int, UndirectedEdge<int>> graph, List<int> R, List<int> P, List<int> X, List<List<int>> cliques)
     {

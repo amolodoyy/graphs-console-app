@@ -6,6 +6,19 @@ namespace GraphLib.Utils
 {
     public class ConsoleHelper
     {
+        private static DateTime timeStart;
+        private static DateTime timeStop;
+
+        public static void StartTimer()
+        {
+          timeStart = DateTime.Now;
+        }
+        public static void StopTimer()
+        {
+          timeStop = DateTime.Now;
+          var diff = timeStop - timeStart;
+          Console.WriteLine($"(Algorithm took {diff.TotalMilliseconds}ms to complete)");
+        }
         public static void WriteTaskMessage(string message, TaskEnum task)
         {
             var color = Console.ForegroundColor;
@@ -73,7 +86,6 @@ namespace GraphLib.Utils
                     var numOfUndirectedEdgesBetween = graph.AdjacentEdges(vertices[i]).Intersect(graph.AdjacentEdges(row)).Count();
                     stringBuilder.Append($"[v_{i}, v_{row}, {numOfUndirectedEdgesBetween}]\n");
                 }
-                stringBuilder.Append('\n');
             }
 
             return stringBuilder.ToString();

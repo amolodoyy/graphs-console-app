@@ -16,9 +16,9 @@ public static class MaximalCommonSubgraphAlgorithm
     // Convert modular graph into an int graph with vertices mapping saved in indexedVertices
     var intGraph = ConvertStringGraphToInt(modularProductString, indexedVertices);
 
-    var maximumCliques = MaximumCliqueAlgorithm.FindAll(intGraph);
+    var maxClique = MaximumCliqueAlgorithm.FindAll(intGraph);
 
-    var subgraphs = GetOriginalSubgraphs(indexedVertices, maximumCliques, graphs.Count);
+    var subgraphs = GetOriginalSubgraphs(indexedVertices, maxClique, graphs.Count);
 
     PrintSubGraphs(subgraphs);
   }
@@ -46,15 +46,14 @@ public static class MaximalCommonSubgraphAlgorithm
     return intGraph;
   }
 
-  private static List<List<int>> GetOriginalSubgraphs(Dictionary<string, int> indexedVertices, List<UndirectedGraph<int, UndirectedEdge<int>>> maximumCliques, int numOfGraphs)
+  private static List<List<int>> GetOriginalSubgraphs(Dictionary<string, int> indexedVertices, UndirectedGraph<int, UndirectedEdge<int>> maxClique, int numOfGraphs)
   {
     Console.WriteLine($"\nThe common subgraphs for {numOfGraphs} graphs:");
 
-    var clique = maximumCliques.FirstOrDefault();
     var originalVertices = new List<List<int>>();
     var subgraphs = new List<List<int>>();
 
-    foreach (var vertex in clique.Vertices) {
+    foreach (var vertex in maxClique.Vertices) {
       var splitVertex = indexedVertices.FirstOrDefault(x => x.Value == vertex).Key.Split('_');
       var list = new List<int>();
 

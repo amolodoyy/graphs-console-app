@@ -5,9 +5,10 @@ namespace GraphLib
 {
     public static class GraphTxtReader
     {
-        public static UndirectedGraph<int, UndirectedEdge<int>>? FromTxt(string filepath)
+        public static (UndirectedGraph<int, UndirectedEdge<int>>?, string?) FromTxt(string filepath)
         {
             var graph = new UndirectedGraph<int, UndirectedEdge<int>>();
+            var fileName = Path.GetFileNameWithoutExtension(filepath);
             try
             {
                 using var reader = new StreamReader(filepath);
@@ -31,9 +32,9 @@ namespace GraphLib
             {
                 ConsoleHelper.WriteError($"Format of graph file {filepath} is not valid. " +
                     $"Omitting this file.");
-                return null;
+                return (null, null);
             }
-            return graph;
+            return (graph, fileName);
         }
         // use for undirected graphs
         private static void ProcessUndirectedRow((int, string) row, UndirectedGraph<int, UndirectedEdge<int>> graph)
