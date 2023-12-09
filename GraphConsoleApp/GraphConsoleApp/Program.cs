@@ -31,23 +31,20 @@ foreach(var graph in graphs)
         GraphSizeAlgorithm<int, UndirectedEdge<int>>.GetSize(graph!),
         currentTask);
 }
-
+*/
 currentTask = TaskEnum.Task2;
 
 ConsoleHelper.WriteTaskMessage("The Bron-Kerbosh algorithm with pivoting is used to calculate the clique.", currentTask);
 
-var graph_1 = graphs.FirstOrDefault();
+var graph_1 = graphs[1];
 
-var cliquesList = MaximumCliqueAlgorithm.FormGraphFromVertices(graph_1!);
+var cliquesList = MaximumCliqueAlgorithm.FindAll(graph_1!);
 
 foreach (var clique in cliquesList){
   Console.WriteLine($"[ {ConsoleHelper.ListToString(clique.Vertices.ToList())}]");
 }
-*/
+
 
 var last2Graphs = graphs.Skip(Math.Max(0, graphs.Count - 2)).ToList();
 
-ModularProductAlgorithm.CalculateProductString(last2Graphs!);
-
-
-int x = 0;
+MaximalCommonSubgraphAlgorithm.Calculate(last2Graphs!);
