@@ -16,8 +16,16 @@ if (!Directory.Exists(AppSettings.SourceDirectoryPath))
 }
 
 var filePaths = Directory.GetFiles(AppSettings.SourceDirectoryPath);
+var graphsInfo = new List<(UndirectedGraph<int, UndirectedEdge<int>>, string)>();
+foreach (var filePath in filePaths) {
+  var tuple = GraphTxtReader.FromTxt(filePath);
+  if (tuple == null) break;
+  for (int i = 0; i < tuple.Value.Item1.Count; i++) {
+    graphsInfo.Add((tuple.Value.Item1[i], tuple.Value.Item2[i]));
+  }
+}
 
-var graphsInfo = filePaths.Select(f => GraphTxtReader.FromTxt(f)).Where(pair => pair.Item1 is not null && pair.Item2 is not null).ToList();
+
 ConsoleHelper.WriteSeparator();
 ConsoleHelper.WriteTaskMessage("Computing the size of the graphs (sum of vertices and UndirectedEdges).", currentTask);
 
